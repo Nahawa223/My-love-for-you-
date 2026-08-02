@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hii ! Une petite question de Nahawa... 💖</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;700&display=swap');
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffeef2;
+            font-family: 'Quicksand', sans-serif;
+            text-align: center;
+            overflow: hidden;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"><rect fill="%23f8d7da" x="0" y="0" width="1" height="1" /><rect fill="%23f8d7da" x="5" y="5" width="1" height="1" /></svg>'); /* Motif de petits points roses */
+            background-size: 20px 20px;
+        }
+
+        /* Conteneur principal */
+        #quiz-container, #success-message {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(255, 105, 135, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Bonjour ! */
+        h2 {
+            font-family: 'Pacifico', cursive;
+            color: #e83e8c;
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+        }
+
+        /* La Question */
+        h1 {
+            color: #d63384;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            padding: 0 20px;
+            font-weight: 700;
+        }
+
+        /* Hello Kitty ! */
+        .hello-kitty {
+            width: 150px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        /* Conteneur des boutons */
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            min-height: 80px; /* Espace pour le bouton qui bouge */
+        }
+
+        /* Style général des boutons */
+        button {
+            padding: 18px 35px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            font-family: 'Quicksand', sans-serif;
+            position: absolute; /* Position absolue pour les faire bouger */
+        }
+
+        /* Bouton OUI */
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+            box-shadow: 0 5px 20px rgba(255, 77, 109, 0.4);
+            left: calc(50% - 100px); /* Position initiale pour centrer */
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.1) rotate(3deg);
+            background-color: #ff1a4a;
+        }
+
+        /* Bouton NON */
+        #noBtn {
+            background-color: #f1f1f1;
+            color: #666;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            right: calc(50% - 100px); /* Position initiale pour centrer */
+        }
+
+        /* Cœurs qui flottent */
+        .heart {
+            position: absolute;
+            bottom: -50px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff6b6b"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.6;
+            animation: floatHeart 6s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes floatHeart {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+            50% { transform: translateY(-50vh) rotate(20deg); opacity: 0.4; }
+            100% { transform: translateY(-100vh) rotate(-20deg); opacity: 0; }
+        }
+
+        /* Message de victoire */
+        #success-message {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #success-message h2 {
+            font-size: 3rem;
+        }
+
+        .success-kitty {
+            width: 200px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cœurs qui flottent en arrière-plan -->
+    <div class="heart" style="width: 30px; height: 30px; left: 10%; animation-delay: 0s;"></div>
+    <div class="heart" style="width: 50px; height: 50px; left: 25%; animation-delay: 2s;"></div>
+    <div class="heart" style="width: 20px; height: 20px; left: 45%; animation-delay: 4s;"></div>
+    <div class="heart" style="width: 40px; height: 40px; left: 65%; animation-delay: 1s;"></div>
+    <div class="heart" style="width: 60px; height: 60px; left: 80%; animation-delay: 3s;"></div>
+    <div class="heart" style="width: 30px; height: 30px; left: 90%; animation-delay: 5s;"></div>
+
+    <div id="quiz-container">
+        <!-- Image de Hello Kitty -->
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/05/Hello_Kitty_character_image.png/180px-Hello_Kitty_character_image.png" alt="Hello Kitty" class="hello-kitty">
+        
+        <h2>Hii ! 👋</h2>
+        <h1 id="question">C’est Nahawa ! Tu veux bien sortir avec moi ? 👉👈</h1>
+        
+        <div class="buttons">
+            <button id="yesBtn" onclick="celebrate()">OUI ! ✨</button>
+            <button id="noBtn" onmouseover="moveNoButton()" onclick="transformNoButton()">Non... 😿</button>
+        </div>
+    </div>
+
+    <div id="success-message">
+        <h2>Hihi ! Je le savais ! 💖😻</h2>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Tuxedo_Sam_character_image.png/180px-Tuxedo_Sam_character_image.png" alt="Célébration" class="success-kitty">
+        <p style="font-size: 1.4rem; color: #555; font-family: 'Pacifico', cursive;">Tu n'avais pas vraiment le choix de toute façon ! 😉</p>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+
+        // Fonction pour faire bouger le bouton NON quand la souris s'approche
+        function moveNoButton() {
+            // Empêche de bouger s'il est déjà transformé
+            if (noBtn.innerText === "OUI ! ✨") return;
+
+            // Calcule une position aléatoire sur l'écran
+            // On reste dans les limites visibles de la fenêtre
+            const maxX = window.innerWidth - noBtn.offsetWidth - 50;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 50;
+            
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            noBtn.style.position = 'fixed'; // Passe en fixe pour bouger n'importe où
+            noBtn.style.left = `${randomX}px`;
+            noBtn.style.top = `${randomY}px`;
+        }
+
+        // Fonction pour transformer le bouton NON en OUI s'il réussit à cliquer
+        function transformNoButton() {
+            if (noBtn.innerText === "Non... 😿") {
+                noBtn.innerText = "OUI ! ✨";
+                noBtn.style.backgroundColor = "#ff4d6d"; // Change en rose
+                noBtn.style.color = "white"; // Texte en blanc
+                noBtn.style.boxShadow = "0 5px 20px rgba(255, 77, 109, 0.4)";
+                
+                // Cache l'autre bouton OUI original pour ne pas avoir deux "OUI"
+                yesBtn.style.display = 'none';
+
+                // Repositionne le nouveau bouton OUI au centre après un court instant
+                setTimeout(() => {
+                   noBtn.style.position = 'static'; // Redevient un bouton normal
+                   // Centre le bouton transformé
+                   const buttonsDiv = document.querySelector('.buttons');
+                   buttonsDiv.style.display = 'flex';
+                   buttonsDiv.style.justifyContent = 'center';
+                   noBtn.style.margin = '0 auto'; 
+                   noBtn.style.position = 'absolute';
+                   noBtn.style.left = 'calc(50% - 100px)';
+                   noBtn.style.right = 'auto';
+                   noBtn.style.top = 'auto';
+                   
+                }, 500);
+
+                // Optionnel : Tu peux appeler celebrate() directement ici
+                // pour que le message de victoire s'affiche dès qu'il clique sur le "Non" transformé.
+                // setTimeout(celebrate, 1500); 
+            } else {
+                // Si le bouton est déjà transformé en OUI, on célèbre !
+                celebrate();
+            }
+        }
+
+        // Fonction de célébration quand il clique sur un bouton OUI
+        function celebrate() {
+            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('success-message').style.display = 'flex';
+            
+            // Lance des confettis virtuels (facultatif, mais cute)
+            // if (typeof confetti !== 'undefined') { confetti(); }
+        }
+    </script>
+</body>
+</html>
