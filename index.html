@@ -1,246 +1,320 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<title>Une petite surprise 💖</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hiiii mon grand... 🌸</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600;700&display=swap');
 
-<style>
-body{
-    margin:0;
-    font-family:'Segoe UI',sans-serif;
-    background:linear-gradient(135deg,#ffd6e8,#ffeef5,#fce4ff);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-}
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
 
-.card{
-    width:420px;
-    background:white;
-    border-radius:25px;
-    padding:30px;
-    text-align:center;
-    box-shadow:0 10px 30px rgba(0,0,0,.15);
-}
+        body {
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ffeef2 0%, #ffdbde 100%);
+            font-family: 'Quicksand', sans-serif;
+            text-align: center;
+            overflow-x: hidden;
+            position: relative;
+        }
 
-h2{
-    color:#ff4f8b;
-}
+        /* Cartes d'étapes */
+        .card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            padding: 35px 25px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(255, 105, 135, 0.25);
+            max-width: 450px;
+            width: 100%;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 0.5s ease-in-out forwards;
+            position: relative;
+            z-index: 10;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+        }
 
-button{
-    margin:8px;
-    padding:12px 20px;
-    border:none;
-    border-radius:15px;
-    cursor:pointer;
-    background:#ff80ab;
-    color:white;
-    font-size:16px;
-    transition:.3s;
-}
+        .card.active {
+            display: flex;
+        }
 
-button:hover{
-    transform:scale(1.08);
-    background:#ff4f8b;
-}
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
 
-.emoji{
-    font-size:60px;
-}
+        /* Titres & Textes */
+        h1 {
+            font-family: 'Pacifico', cursive;
+            color: #ff4d6d;
+            font-size: 2.2rem;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
 
-select{
-    padding:10px;
-    border-radius:10px;
-    font-size:16px;
-    margin-top:10px;
-}
-</style>
+        p {
+            color: #555;
+            font-size: 1.15rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
 
+        /* Illustrations */
+        .cute-img {
+            width: 140px;
+            height: auto;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));
+        }
+
+        /* Boutons */
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            position: relative;
+        }
+
+        .btn-row {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+            position: relative;
+            min-height: 65px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #ff4d6d 0%, #ff758f 100%);
+            color: white;
+            border: none;
+            padding: 16px 28px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.35);
+            transition: all 0.2s ease;
+            font-family: 'Quicksand', sans-serif;
+            width: 100%;
+        }
+
+        button:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 12px 25px rgba(255, 77, 109, 0.5);
+        }
+
+        button:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        /* Style spécifique pour le bouton Non */
+        #noBtn {
+            background: #f0f0f0;
+            color: #666;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            position: absolute;
+            right: 0;
+            width: auto;
+            padding: 16px 20px;
+        }
+
+        #yesBtn {
+            position: absolute;
+            left: 0;
+            width: auto;
+            padding: 16px 20px;
+        }
+
+        /* Feedback rapide après choix */
+        .feedback-text {
+            color: #ff4d6d;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-top: 15px;
+            min-height: 30px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Cœurs & Pétales en arrière-plan */
+        .floating-heart {
+            position: fixed;
+            bottom: -50px;
+            font-size: 24px;
+            opacity: 0.6;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatUp 7s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
 </head>
 <body>
 
-<div class="card">
-
-<div id="contenu">
-
-<div class="emoji">🌸💖🧸</div>
-
-<h2>Bonsoir, comment vas-tu ?</h2>
-
-<button onclick="pasBien()">😔 Pas très bien</button>
-
-<button onclick="bien()">😊 Ça va bien</button>
-
-</div>
-
-</div>
-
-<script>
-
-function pasBien(){
-document.getElementById("contenu").innerHTML=`
-<div class="emoji">🩷</div>
-<h2>Oh non...</h2>
-
-<p>J'espère que ta journée va s'améliorer. Tu es une personne formidable et tu mérites plein de bonheur. 🌷✨</p>
-
-<button onclick="questionSortir()">Continuer 💕</button>
-`;
-}
-
-function bien(){
-document.getElementById("contenu").innerHTML=`
-<div class="emoji">🥰</div>
-<h2>Ça fait plaisir !</h2>
-
-<p>J'espère que cette bonne humeur continuera toute la journée ! 🌸</p>
-
-<button onclick="questionSortir()">Continuer 💕</button>
-`;
-}
-
-function questionSortir(){
-
-document.getElementById("contenu").innerHTML=`
-
-<div class="emoji">🌹</div>
-
-<h2>Peux-tu sortir avec moi ? 💌</h2>
-
-<button onclick="oui()">Ouiii 💖</button>
-
-<button onclick="non()">Non, désolé 😅</button>
-
-`;
-
-}
-
-function oui(){
-
-choisirHeure();
-
-}
-
-function non(){
-
-document.getElementById("contenu").innerHTML=`
-
-<div class="emoji">😂💕</div>
-
-<h2>Tu croyais vraiment que ce bouton allait marcher ? 😏</h2>
-
-<p>Allez... je vais faire comme si tu avais répondu OUI. 💖</p>
-
-<button onclick="choisirHeure()">Continuer 🌸</button>
-
-`;
-
-}
-
-function choisirHeure(){
-
-document.getElementById("contenu").innerHTML=`
-
-<div class="emoji">⏰✨</div>
-
-<h2>À quelle heure ?</h2>
-
-<select id="heure">
-
-<option>09h00</option>
-
-<option>16h00</option>
-
-<option>18h00</option>
-
-<option>20h00</option>
-
-</select>
-
-<br><br>
-
-<button onclick="choisirRepas()">Suivant 🍽️</button>
-
-`;
-
-}
-
-function choisirRepas(){
-
-document.getElementById("contenu").innerHTML=`
-
-<div class="emoji">🍕🌮🍝</div>
-
-<h2>Qu'est-ce que tu préfères ?</h2>
-
-<select>
-
-<option>🍕 Pizza</option>
-
-<option>🍝 Pâtes italiennes</option>
-
-<option>🍕 Lasagnes</option>
-
-<option>🌮 Tacos</option>
-
-<option>🌯 Burrito</option>
-
-<option>🥙 Quesadilla</option>
-
-</select>
-
-<br><br>
-
-<button onclick="restaurant()">Continuer 💕</button>
-
-`;
-
-}
-
-function restaurant(){
-
-document.getElementById("contenu").innerHTML=`
-
-<div class="emoji">🍽️✨</div>
-
-<h2>Choisis le restaurant 💖</h2>
-
-<select>
-
-<option>Le Jules Verne 🇫🇷</option>
-
-<option>Il Carpaccio 🇮🇹</option>
-
-<option>Rosa Mexicano 🇲🇽</option>
-
-</select>
-
-<br><br>
-
-<button onclick="fin()">Valider 💕</button>
-
-`;
-
-}
-
-function fin(){
-
-document.getElementById("contenu").innerHTML=`
-
-<div class="emoji">💖🎉🌹</div>
-
-<h2>Parfait !!</h2>
-
-<p>Notre rendez-vous est confirmé ! 🥰✨</p>
-
-<p>J'ai hâte de passer ce moment avec toi. 🌸💕</p>
-
-`;
-
-}
-
-</script>
-
+    <!-- Écran 1 -->
+    <div class="card active" id="step1">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/05/Hello_Kitty_character_image.png/180px-Hello_Kitty_character_image.png" class="cute-img" alt="Hello Kitty">
+        <h1>Hiiii mon grand... 😫🩷</h1>
+        <p>C'est Nahawa.</p>
+        <div class="btn-container">
+            <button onclick="nextStep(2)">Suivant ✨</button>
+        </div>
+    </div>
+
+    <!-- Écran 2 -->
+    <div class="card" id="step2">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Tuxedo_Sam_character_image.png/180px-Tuxedo_Sam_character_image.png" class="cute-img" alt="Cute">
+        <h1>Héhé ! 🤭💕</h1>
+        <p>Je savais que t'allais continuer.<br><br>Alors, petit cœur... 🧸💖<br><br>J'espère que tu vas bien. J'ai préparé une toute petite surprise rien que pour toi. Promis, ça ne prendra que quelques minutes. 🌸✨</p>
+        <div class="btn-container">
+            <button onclick="nextStep(3)">Continuer 💖</button>
+        </div>
+    </div>
+
+    <!-- Écran 3 -->
+    <div class="card" id="step3">
+        <h1>Il y a juste une règle... 🤫🎀</h1>
+        <p>Tu dois répondre à toutes les questions jusqu'à la fin. Pas de triche, pas de retour en arrière ! 😌💕<br><br>Alors, appuie sur « Commencer » et laisse-toi guider... 💌🧸✨</p>
+        <div class="btn-container">
+            <button onclick="nextStep(4)">Commencer 💌</button>
+        </div>
+    </div>
+
+    <!-- Écran 4 : Question Principale -->
+    <div class="card" id="step4">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/05/Hello_Kitty_character_image.png/180px-Hello_Kitty_character_image.png" class="cute-img" alt="Hello Kitty Love">
+        <h1>Question importante... 🥹💖</h1>
+        <p>Veux-tu être celui qui illuminera mes journées et fera battre mon cœur un peu plus fort ? 🌷✨</p>
+        <div class="btn-row">
+            <button id="yesBtn" onclick="answerMain(true)">💖 Oui, avec grand plaisir.</button>
+            <button id="noBtn" onmouseover="dodgeNo()" onclick="dodgeNo()">🤭 Non... enfin, je crois.</button>
+        </div>
+    </div>
+
+    <!-- Écran 5 : L'Heure -->
+    <div class="card" id="step5">
+        <h1>⏰ Choix de l'heure</h1>
+        <p>Bon... il faut quand même qu'on choisisse une heure. J'ai déjà hâte de te voir. 🤭✨</p>
+        <div class="btn-container">
+            <button onclick="selectHour('18 h', '18 h... excellent choix. Juste assez de temps pour que tu penses un peu à moi avant. 😌💛')">18 h 🌆</button>
+            <button onclick="selectHour('20 h', '20 h ? Une soirée, alors... j\'aime bien ton idée. 🌙🤭')">20 h 🌙</button>
+        </div>
+        <div class="feedback-text" id="hourFeedback"></div>
+    </div>
+
+    <!-- Écran 6 : La Nourriture -->
+    <div class="card" id="step6">
+        <h1>🍕 Choix du repas</h1>
+        <p>Dis-moi... qu'est-ce qui te ferait plaisir ? Promis, je ne jugerai pas... sauf si tu ne prends pas de dessert. 😂🍰</p>
+        <div class="btn-container">
+            <button onclick="selectFood('Pizza', 'Une pizza ? Je valide. Maintenant, il faudra juste partager une part avec moi. 😏🍕')">Une pizza 🍕</button>
+            <button onclick="selectFood('Pâtes', 'Les pâtes... très bon goût. Tu marques des points. 🤌✨')">Des bonnes pâtes 🍝</button>
+        </div>
+        <div class="feedback-text" id="foodFeedback"></div>
+    </div>
+
+    <!-- Écran 7 : Le Resto -->
+    <div class="card" id="step7">
+        <h1>🍽️ Choix de l'endroit</h1>
+        <p>Maintenant, choisis l'endroit où tu aimerais m'inviter... euh... où on ira. 🤭🌹</p>
+        <div class="btn-container">
+            <button onclick="selectResto('Un petit resto cosy', 'Un petit endroit cosy... parfait pour bien discuter. 🕯️✨')">Un petit resto cosy 🕯️</button>
+            <button onclick="selectResto('Un bel endroit stylé', 'Ouuuh, chic ! J\'aime ton style. 😎✨')">Un bel endroit stylé ✨</button>
+        </div>
+        <div class="feedback-text" id="restoFeedback"></div>
+    </div>
+
+    <!-- Écran Final -->
+    <div class="card" id="stepFinal">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Tuxedo_Sam_character_image.png/180px-Tuxedo_Sam_character_image.png" class="cute-img" alt="Célébration">
+        <h1>C'est officiel ! ❤️🎉</h1>
+        <p>Parfait... tout est organisé.<br><br><span style="font-size: 1.3rem; color: #ff4d6d; font-family: 'Pacifico', cursive;">Il ne manque plus que toi. ❤️</span></p>
+    </div>
+
+    <script>
+        // Génération de cœurs / pétale flottants
+        const hearts = ['💖', '🌸', '✨', '🎀', '🧸', '💕'];
+        for (let i = 0; i < 15; i++) {
+            const h = document.createElement('div');
+            h.className = 'floating-heart';
+            h.innerText = hearts[Math.floor(Math.random() * hearts.length)];
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.animationDelay = Math.random() * 5 + 's';
+            h.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            document.body.appendChild(h);
+        }
+
+        function nextStep(stepNumber) {
+            document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
+            document.getElementById('step' + stepNumber).classList.add('active');
+        }
+
+        // Esquive du bouton "Non"
+        let dodgeCount = 0;
+        function dodgeNo() {
+            const noBtn = document.getElementById('noBtn');
+            dodgeCount++;
+
+            if (dodgeCount < 4) {
+                // Il bouge
+                const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 40);
+                const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 40);
+                noBtn.style.position = 'fixed';
+                noBtn.style.left = x + 'px';
+                noBtn.style.top = y + 'px';
+            } else {
+                // Après 4 tentatives, il se transforme en OUI
+                noBtn.innerText = "Mmmh... Oui ! 😌💕";
+                noBtn.style.background = "linear-gradient(135deg, #ff4d6d 0%, #ff758f 100%)";
+                noBtn.style.color = "white";
+                noBtn.onclick = function() { answerMain(true); };
+            }
+        }
+
+        function answerMain(isYes) {
+            if (isYes) {
+                alert("Mmmh... de toute façon tu n'avais pas vraiment le choix, petit cœur. 🤭🩷");
+                nextStep(5);
+            }
+        }
+
+        function selectHour(text, feedback) {
+            document.getElementById('hourFeedback').innerText = feedback;
+            setTimeout(() => {
+                nextStep(6);
+            }, 1800);
+        }
+
+        function selectFood(text, feedback) {
+            document.getElementById('foodFeedback').innerText = feedback;
+            setTimeout(() => {
+                nextStep(7);
+            }, 1800);
+        }
+
+        function selectResto(text, feedback) {
+            document.getElementById('restoFeedback').innerText = feedback;
+            setTimeout(() => {
+                nextStep('Final');
+            }, 1800);
+        }
+    </script>
 </body>
 </html>
